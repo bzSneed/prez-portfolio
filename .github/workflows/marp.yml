@@ -1,4 +1,4 @@
-name: Build Marp Slides
+name: Build and Deploy Marp Slides (Direct)
 
 on:
   push:
@@ -8,23 +8,25 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Convert Markdown to HTML
-        uses: KoharaKazuya/marp-cli-action@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          args: presentation_portfolio.md --html --output dist/index.html
+          node-version: '20'
 
-      # This is the diagnostic step we need
+      - name: Convert with Marp CLI (Directly)
+        run: npx @marp-team/marp-cli@latest presentation_portfolio.md --html -o dist/index.html
+
       - name: Check output folder
         run: ls -R dist/
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
