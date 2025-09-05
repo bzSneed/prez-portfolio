@@ -4,19 +4,15 @@ theme: default
 paginate: true
 footer: '![width:30px](https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png)'
 style: |
-  /* GitHub Dark Theme (Primer) */
+  /* --- GitHub Dark Theme (Primer) --- */
   section {
-    background-color: #0d1117; /* GitHub's dark background */
-    color: #e6edf3; /* GitHub's primary light text color */
+    background-color: #0d1117;
+    color: #e6edf3;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   }
-
-  /* Headers will be a brighter white for contrast */
   h1, h2, h3, h4 {
     color: #ffffff;
   }
-
-  /* Links, bold text, and highlights will use GitHub's signature blue */
   a, strong {
     color: #58a6ff;
   }
@@ -24,16 +20,31 @@ style: |
     color: #79c0ff;
   }
 
-  /* This creates an optional "light" theme, just like GitHub's UI */
+  /* --- Optional Light Theme --- */
   section.light {
-    background-color: #ffffff; /* White background */
-    color: #24292e; /* GitHub's dark text */
+    background-color: #ffffff;
+    color: #24292e;
   }
   section.light h1, section.light h2, section.light h3 {
-    color: #24292e; /* Dark headers for the light theme */
+    color: #24292e;
   }
   section.light a, section.light strong {
-    color: #0969da; /* A darker blue for better contrast on a light background */
+    color: #0969da;
+  }
+
+  /* --- NEW: Lead Slide Style (for Visual Hierarchy) --- */
+  /* This style is for title or introductory slides */
+  section.lead {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  section.lead h1 {
+    font-size: 85px; /* Makes the main title much larger */
+  }
+  section.lead h3 {
+    font-size: 35px; /* Increases subtitle size */
   }
 ---
 
