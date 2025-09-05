@@ -1,9 +1,9 @@
-name: Build and Deploy Marp Slides (Direct)
+name: Build and Deploy Marp Slides
 
 on:
   push:
     branches: [main]
-
+  
 permissions:
   contents: write
 
@@ -19,11 +19,8 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Convert with Marp CLI (Directly)
+      - name: Convert with Marp CLI
         run: npx @marp-team/marp-cli@latest presentation_portfolio.md --html -o dist/index.html
-
-      - name: Check output folder
-        run: ls -R dist/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
