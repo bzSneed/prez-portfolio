@@ -11,11 +11,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Convert Markdown into HTML
-        uses: KoharaKazuya/marp-cli-action@v2
+      - name: Convert Markdown to HTML
+        uses: KoharaKazuya/marp-cli-action@v3
         with:
-          input: prez-portfolio.md
-          output: dist/index.html
+          args: prez-portfolio.md --html --output dist/index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
