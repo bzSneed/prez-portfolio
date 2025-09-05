@@ -1,8 +1,29 @@
----
-marp: true
-theme: default
----
+name: Build and Deploy Marp Slides
 
-# Test Slide
+on:
+  push:
+    branches: [main]
+  
+permissions:
+  contents: write
 
-If you can see this, the problem is in the old Markdown content.
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Convert with Marp CLI
+        run: npx @marp-team/marp-cli@latest presentation_portfolio.md --html -o dist/index.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
