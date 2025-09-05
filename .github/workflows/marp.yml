@@ -19,10 +19,6 @@ jobs:
         with:
           args: presentation_portfolio.md --html --output dist/index.html
 
-      # This step must be indented just like the steps above and below it
-      - name: Check output folder
-        run: ls -R dist/
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
