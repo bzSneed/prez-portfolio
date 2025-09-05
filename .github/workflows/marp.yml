@@ -3,7 +3,7 @@ name: Build Marp Slides
 on:
   push:
     branches: [main]
-  
+
 permissions:
   contents: write
 
@@ -18,6 +18,10 @@ jobs:
         uses: KoharaKazuya/marp-cli-action@v3
         with:
           args: presentation_portfolio.md --html --output dist/index.html
+
+      # This is the diagnostic step we need
+      - name: Check output folder
+        run: ls -R dist/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
