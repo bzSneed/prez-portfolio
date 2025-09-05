@@ -21,6 +21,9 @@ jobs:
         with:
           args: presentation_portfolio.md --html --output dist/index.html
 
+           - name: Check output folder
+        run: ls -R dist/
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
