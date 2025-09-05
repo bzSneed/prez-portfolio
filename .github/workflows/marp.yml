@@ -1,9 +1,14 @@
-
 name: Build Marp Slides
 
 on:
   push:
     branches: [main]
+
+# Add this permissions block
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
