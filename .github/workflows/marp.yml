@@ -3,7 +3,7 @@ name: Build and Deploy Marp Slides
 on:
   push:
     branches: [main]
-  
+
 permissions:
   contents: write
 
@@ -20,7 +20,63 @@ jobs:
           node-version: '20'
 
       - name: Convert with Marp CLI
-        run: npx @marp-team/marp-cli@latest presentation_portfolio.md --html -o dist/index.html
+        # This is where we will simplify the CSS
+        run: |
+          cat << EOF > presentation_portfolio_styled.md
+          ---
+          marp: true
+          theme: default
+          paginate: true
+          footer: '![width:30px](https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png)'
+          style: |
+            /* --- A Dynamic & Creative Theme (Simplified) --- */
+            @keyframes gradient-animation {
+              0% { background-position: 0% 50%; }
+              50% { background-position: 100% 50%; }
+              100% { background-position: 0% 50%; }
+            }
+
+            section {
+              font-family: sans-serif; /* Using a basic font for now */
+              background: linear-gradient(-45deg, #0d1117, #161b22, #010409, #21262d);
+              background-size: 400% 400%;
+              animation: gradient-animation 15s ease infinite;
+              color: #e6edf3;
+            }
+            h1, h2, h3 {
+              font-weight: 700;
+              color: #ffffff;
+              letter-spacing: -0.02em;
+            }
+            a, strong {
+              color: #58a6ff;
+            }
+
+            section.glass {
+              backdrop-filter: blur(20px) saturate(180%);
+              -webkit-backdrop-filter: blur(20px) saturate(180%);
+              background-color: rgba(22, 27, 34, 0.75);
+              border: 1px solid rgba(255, 255, 255, 0.125);
+              border-radius: 15px;
+            }
+            section.glass h2 {
+              text-shadow: 0 0 15px rgba(0,0,0,0.4);
+            }
+
+            section.spotlight {
+              background: radial-gradient(circle at center, #161b22 0%, #0d1117 80%),
+                          linear-gradient(-45deg, #0d1117, #161b22, #010409, #21262d);
+              background-size: 100%, 400% 400%;
+              animation: gradient-animation 15s ease infinite;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              text-align: center;
+            }
+          ---
+          $(cat presentation_portfolio.md)
+          EOF
+          npx @marp-team/marp-cli@latest presentation_portfolio_styled.md --html -o dist/index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
