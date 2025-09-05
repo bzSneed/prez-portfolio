@@ -1,0 +1,21 @@
+name: Build Marp Slides
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: marp-team/marp-cli-action@v2
+        with:
+          input: presentation_portfolio.md
+          output: dist
+          allow-local-files: true
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
